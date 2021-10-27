@@ -44,7 +44,7 @@ private slots:
     void OpenCom();
     void CloseCom();
 
-    void SendInfo(char* info);
+    void SendInfo(QByteArray &info);
     void ReceiveInfo();
 
     void on_pushButton_scanCom_clicked();

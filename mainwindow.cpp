@@ -21,12 +21,6 @@ QSerialPort *m_serialPort = new QSerialPort();//实例化串口类一个对象
 QStringList m_serialPortName;
 QStringList m_serialPortInfo;
 
-//这样我们就获取到 可用的串口名字了
-
-
-
-
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -168,7 +162,7 @@ void MainWindow::CloseCom(){
 
 
 
-void MainWindow::SendInfo(char* info){
+void MainWindow::SendInfo(QByteArray &info){
     if(m_serialPort->isOpen())
     {
 
@@ -186,8 +180,7 @@ void MainWindow::SendInfo(char* info){
 
 void MainWindow::ReceiveInfo(){
     QByteArray info = m_serialPort->readLine();
-    QByteArray hexData = info.toHex();
-    qDebug()<< "info = "<< info << "hexdata = " << hexData;
+    qDebug()<< "info = "<< info;
 
     ui->textBrowser_receive->setText(info);
 
@@ -263,11 +256,6 @@ QChart *MainWindow::createSplineChart() const
 
 
 
-
-
-
-
-
 void MainWindow::on_comboBox_baudrate_currentTextChanged(const QString &arg1)
 {
     CloseCom();
@@ -276,12 +264,11 @@ void MainWindow::on_comboBox_baudrate_currentTextChanged(const QString &arg1)
 
 
 
-
 //充气
 void MainWindow::on_pushButton_inAir_clicked()
 {
-    char orderInfo = '1';
-    SendInfo(&orderInfo);
+    QByteArray orderInfo = "1";
+    SendInfo(orderInfo);
 
 
 }
@@ -289,8 +276,8 @@ void MainWindow::on_pushButton_inAir_clicked()
 //放气
 void MainWindow::on_pushButton_outAir_clicked()
 {
-    char orderInfo = '2';
-    SendInfo(&orderInfo);
+    QByteArray orderInfo = "2";
+    SendInfo(orderInfo);
 
 
 }
