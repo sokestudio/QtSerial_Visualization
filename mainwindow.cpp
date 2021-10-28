@@ -15,6 +15,7 @@
 #include <QtCore/QRandomGenerator>
 #include <QtCharts/QValueAxis>
 
+
 using namespace std;
 
 QSerialPort *m_serialPort = new QSerialPort();//实例化串口类一个对象
@@ -45,11 +46,31 @@ MainWindow::MainWindow(QWidget *parent)
     m_charts << chartView;
 
 
+    connect(timer, SIGNAL(timeout()), this, SLOT(UpdateState()));//要自定义update函数实现自己的功能哟
+
+
 }
+
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::AirStateUpdate()
+{
+    static bool airStateFlag = true;
+
+    if(airStateFlag){
+        ui->frame_runState->setStyleSheet("border-radius:7px;background-color: rgb(255, 255, 255);");
+        qDebug()<<"1.0";
+    }
+    else{
+        ui->frame_runState->setStyleSheet("border-radius:7px;background-color: rgb(255, 0, 127);;");
+        qDebug()<<"1.1";
+    }
+    airStateFlag = !airStateFlag;
 }
 
 
@@ -184,13 +205,15 @@ void MainWindow::ReceiveInfo(){
 
     ui->textBrowser_receive->setText(info);
 
-    if(info == "1"){
+    if(info == "#"){
+        timer->stop();//设置时间间隔为500毫秒
+        ui->frame_runState->setStyleSheet("border-radius:7px;background-color: rgb(85, 255, 0);");
         inAirCut++;
-        ui->lcdNumber_inCut->display(inAirCut);
+        ui->label_inAirCut->setText(QString::number(inAirCut));
     }
     else if(info == "2"){
         outAirCut++;
-        ui->lcdNumber_outCut->display(outAirCut);
+        ui->label_outAirCut->setText(QString::number(outAirCut));
     }
     else{
         QMessageBox::warning(this,"信息","操作失败！！");
@@ -241,8 +264,8 @@ QChart *MainWindow::createSplineChart() const
     }
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);
-    chart->axes(Qt::Vertical).first()->setRange(0, m_valueCount);
+    //chart->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);
+    //chart->axes(Qt::Vertical).first()->setRange(0, m_valueCount);
 
     // Add space to label to add space between labels and axis
     QValueAxis *axisY = qobject_cast<QValueAxis*>(chart->axes(Qt::Vertical).first());
@@ -267,8 +290,10 @@ void MainWindow::on_comboBox_baudrate_currentTextChanged(const QString &arg1)
 //充气
 void MainWindow::on_pushButton_inAir_clicked()
 {
-    QByteArray orderInfo = "1";
+    timer->start(500);//设置时间间隔为500毫秒
+    QByteArray orderInfo = "1@";
     SendInfo(orderInfo);
+
 
 
 }

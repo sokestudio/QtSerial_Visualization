@@ -5,6 +5,7 @@
 
 #include <QMainWindow>
 #include <QtCharts/QChartGlobal>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,9 +37,12 @@ public:
     int inAirCut;
     int outAirCut;
     int airSize;
+    QTimer *timer = new QTimer(this);          //构建QTimer对象
 
 
 private slots:
+
+    void AirStateUpdate();
 
     void SearchCom();
     void OpenCom();
