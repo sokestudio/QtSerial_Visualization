@@ -307,3 +307,11 @@ void MainWindow::on_pushButton_outAir_clicked()
 
 }
 
+
+void MainWindow::on_actionAbout_triggered()
+{
+    AboutDialog aboutDia(this);
+    //aboutDia.show();
+    aboutDia.exec();
+}
+

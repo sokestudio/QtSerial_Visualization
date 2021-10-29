@@ -150,6 +150,9 @@
       </item>
       <item row="1" column="0">
        <widget class="QGroupBox" name="groupBox_2">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="maximumSize">
          <size>
           <width>280</width>
@@ -418,22 +421,43 @@ background-color: rgb(85, 255, 0);</string>
    </property>
    <widget class="QMenu" name="menu11">
     <property name="title">
-     <string>11</string>
+     <string>文件</string>
     </property>
     <addaction name="action111"/>
    </widget>
    <widget class="QMenu" name="menu22">
     <property name="title">
-     <string>22</string>
+     <string>编辑</string>
     </property>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>工具</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_help">
+    <property name="title">
+     <string>帮助(&amp;H)</string>
+    </property>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menu11"/>
    <addaction name="menu22"/>
+   <addaction name="menu"/>
+   <addaction name="menu_help"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action111">
    <property name="text">
-    <string>111</string>
+    <string>保存数据</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
    </property>
   </action>
  </widget>

@@ -7,6 +7,8 @@
 #include <QtCharts/QChartGlobal>
 #include <QTimer>
 
+#include "AboutDialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -33,6 +35,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 
     int inAirCut;
     int outAirCut;
@@ -65,6 +68,8 @@ private slots:
     void on_pushButton_inAir_clicked();
 
     void on_pushButton_outAir_clicked();
+
+    void on_actionAbout_triggered();
 
 private:
     int m_listCount;
